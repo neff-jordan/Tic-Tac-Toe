@@ -11,6 +11,8 @@ public class TicTacToe {
 
 	public static void main(String[] args) {
 
+		// This is the 2d array that prints the game board throughout the game. 
+		
 		char [][] gameboard = {{' ', '|', ' ', '|', ' '},
 							   {'-', '+', '-', '+', '-'},
 							   {' ', '|', ' ', '|', ' '},
@@ -18,6 +20,10 @@ public class TicTacToe {
 							   {' ', '|', ' ', '|', ' '}};
 		
 		printgameboard(gameboard);
+		
+		/* lines 28-35 first prompt the user for a position to put their 'X'. It then prevents the user from placing their piece on a spot that is 
+		 * already occupied by the CPU.
+		 */
 		
 	while(true) {
 		Scanner scan = new Scanner(System.in);
@@ -35,9 +41,10 @@ public class TicTacToe {
 		if(result.length() > 0) {
 			System.out.println(result);
 			break;
-		
 		}	
-			
+		
+		// lines 48-52 use the Random operator to place the CPU's 'O'. Also prevents it from using a taken spot on the board. 
+		
 		Random rand = new Random();
 		int cpuPos = rand.nextInt(9) + 1;
 		while(playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos) ) {
@@ -48,22 +55,24 @@ public class TicTacToe {
 		
 		printgameboard(gameboard);
 		
+		// 60-67 check the conditions of the pieces of the two players. Then prints the appropriate response. 
+		
 		result = checkWinner();
 		if(result.length() > 0) {
 			System.out.println(result);
 			break;
 		}
 		System.out.println(result);
-
 	}
 	}
 		
 	public static void printgameboard(char [][] gameboard) {
+	
+		// This prints the game board 
+		
 		for(char[] row : gameboard) {
 			for(char c : row) {
 				System.out.print(c);
-			
-				
 			}
 			System.out.println();
 		}
@@ -71,6 +80,8 @@ public class TicTacToe {
 	}
 
 	public static void placePiece(char[][] gameboard, int pos, String user) {
+		
+		// 86-94 assigns the player symbols and adds them to the game board. 
 		
 		char symbol = ' ';
 		
@@ -81,6 +92,8 @@ public class TicTacToe {
 			symbol = 'O';
 			cpuPositions.add(pos);
 		}
+		
+		// Assigns locations to the entered symbols. i.e. [0][0] = top left. 
 		
 		switch(pos) {
 		
@@ -118,6 +131,8 @@ public class TicTacToe {
 	
 	public static String checkWinner() {
 		
+		// 131-155 is creating the rules for how to win. across, diagonal, etc. 
+		
 		List topRow = Arrays.asList(1, 2, 3);
 		List midRow = Arrays.asList(4, 5, 6);
 		List botRow = Arrays.asList(7, 8, 9);
@@ -139,6 +154,8 @@ public class TicTacToe {
 		winning.add(cross1);
 		winning.add(cross2);
 		
+		// Once the conditions above have been satisfied, 159-170 print the result of the game. 
+		
 		for(List l : winning) {
 			if(playerPositions.containsAll(l)) {
 				return "Congratulations you won!";
@@ -148,7 +165,6 @@ public class TicTacToe {
 				return "Draw!";
 			}
 		}
-		
 		return "";
 	}
 }
